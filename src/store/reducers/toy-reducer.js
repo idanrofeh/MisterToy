@@ -17,13 +17,16 @@ export function toyReducer(state = initialState, action) {
             break;
         case 'SET_SORT':
             const { sortBy } = action;
-            let toys;
+            // console.log(sortBy);
+            let sortedToys;
             if (sortBy === 'name') {
-                toys = state.toys.sort((t1, t2) => t1.name.localeCompare(t2.name))
+                sortedToys = state.toys.sort((t1, t2) => t1.name.localeCompare(t2.name))
+                console.log(sortedToys);
             } else {
-                toys = state.toys.sort((t1, t2) => t2[sortBy] - t1[sortBy])
+                sortedToys = state.toys.sort((t1, t2) => t2[sortBy] - t1[sortBy])
             }
-            newState = { ...state, toys: toys, sortBy }
+            newState = { ...state, toys: sortedToys, sortBy }
+            console.log(newState);
             break;
         case 'SET_FILTER':
             newState = { ...state, filterBy: action.filterBy }

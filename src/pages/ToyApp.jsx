@@ -8,13 +8,12 @@ import { storageService } from "../services/async-storage-service";
 import { ToyList } from "../cmps/ToyList.jsx";
 import { ToyFilter } from "../cmps/ToyFilter.jsx";
 
-function _ToyApp({ loadToys, toys, filterBy }) {
+function _ToyApp({ loadToys, toys, filterBy, sortBy }) {
   useEffect(async () => {
     await loadToys();
   }, [filterBy]);
 
   if (!toys) return <span>No toys to show</span>;
-
   return (
     <section className="toy-app">
       <ToyFilter />
@@ -27,6 +26,7 @@ function mapStateToProps(state) {
   return {
     toys: state.toyModule.toys,
     filterBy: state.toyModule.filterBy,
+    sortBy: state.toyModule.sortBy,
   };
 }
 

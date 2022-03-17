@@ -1,20 +1,29 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
+import { connect } from "react-redux";
+import { loadToys } from "../store/actions/toy-actions";
 
 import { toyService } from "../services/toy-service";
 import { utilService } from "../services/util.service";
+import { NavLink } from "react-router-dom";
 
-export function ToyDetails() {
+export function _ToyDetails({ toys, loadToys }) {
   const [toy, setToy] = useState(null);
   const { toyId } = useParams();
 
   useEffect(async () => {
-    const toyToSet = await toyService.getById(toyId);
-    setToy(toyToSet);
+    if (!toys.length) {
+      console.log("@!@!@!@!@!");
+      await loadToys();
+    }
   }, []);
 
-  if (!toy) return <span>No such toy</span>;
+  useEffect(() => {
+    const toyToSet = toys.find((toy) => toy._id === toyId);
+    setToy(toyToSet);
+  }, [toys]);
 
+  if (!toy) return <span>No such toy</span>;
   const { name, price, labels, createdAt, inStock } = toy;
   return (
     <section className="toy-details">
@@ -29,6 +38,22 @@ export function ToyDetails() {
       <div className={"bold in-stock detail " + (inStock ? "green" : "red")}>
         {inStock ? "In Stock" : "Out of Stock"}
       </div>
+      <NavLink to={`/edit/${toy._id}`}>Edit toy</NavLink>
     </section>
   );
 }
+
+function mapStateToProps(state) {
+  return {
+    toys: state.toyModule.toys,
+  };
+}
+
+const mapDispatchToProps = {
+  loadToys,
+};
+
+export const ToyDetails = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(_ToyDetails);

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { connect } from "react-redux";
 import Select from "react-select";
 
-import { onSetFilter } from "../store/actions/toy-actions";
+import { onSetFilter, onSetSort } from "../store/actions/toy-actions";
 
 const options = [
   { value: "On wheels", label: "On wheels" },
@@ -12,9 +12,10 @@ const options = [
   { value: "Doll", label: "Doll" },
   { value: "Puzzle", label: "Puzzle" },
   { value: "Outdoor", label: "Outdoor" },
+  { value: "Battery powered", label: "Battery powered" },
 ];
 
-function _ToyFilter({ storeFilterBy, onSetFilter }) {
+function _ToyFilter({ storeFilterBy, onSetFilter, onSetSort, sortBy }) {
   const [filterBy, setFilterBy] = useState({ ...storeFilterBy });
 
   const handleChange = ({ target }) => {
@@ -23,7 +24,6 @@ function _ToyFilter({ storeFilterBy, onSetFilter }) {
     if (value === "true") value = true;
     else if (value === "false") value = false;
     const newFilterBy = { ...filterBy, [name]: value };
-    console.log(newFilterBy);
     setFilterBy(newFilterBy);
   };
 
@@ -75,6 +75,20 @@ function _ToyFilter({ storeFilterBy, onSetFilter }) {
           Filter!
         </a>
       </div>
+      <div className="sorter">
+        <label>
+          Sort by:
+          <select
+            name="SortBy"
+            onChange={({ target }) => onSetSort(target.value)}
+            value={sortBy}
+          >
+            <option value="createdAt">CreatedAt</option>
+            <option value="name">Name</option>
+            <option value="price">Price</option>
+          </select>
+        </label>
+      </div>
     </section>
   );
 }
@@ -82,11 +96,13 @@ function _ToyFilter({ storeFilterBy, onSetFilter }) {
 function mapStateToProps(state) {
   return {
     storeFilterBy: state.toyModule.filterBy,
+    sortBy: state.toyModule.sortBy,
   };
 }
 
 const mapDispatchToProps = {
   onSetFilter,
+  onSetSort,
 };
 
 export const ToyFilter = connect(

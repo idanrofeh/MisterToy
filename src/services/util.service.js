@@ -1,25 +1,24 @@
 export const utilService = {
     makeId,
-    makeLorem,
+    getRandomText,
     getRandomIntInclusive,
-    getTimeAndDate
-
+    getTimeAndDate,
+    getEmptyToy,
 }
 
 function makeId(length = 6) {
-    var txt = '';
-    var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
-    for (var i = 0; i < length; i++) {
+    let txt = '';
+    const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    for (let i = 0; i < length; i++) {
         txt += possible.charAt(Math.floor(Math.random() * possible.length));
     }
 
     return txt;
 }
 
-function makeLorem(size = 100) {
-    var words = ['The sky', 'above', 'the port', 'was', 'the color of television', 'tuned', 'to', 'a dead channel', '.', 'All', 'this happened', 'more or less', '.', 'I', 'had', 'the story', 'bit by bit', 'from various people', 'and', 'as generally', 'happens', 'in such cases', 'each time', 'it', 'was', 'a different story', '.', 'It', 'was', 'a pleasure', 'to', 'burn'];
-    var txt = '';
+function getRandomText(size = 100) {
+    const words = ['The sky', 'above', 'the port', 'was', 'the color of television', 'tuned', 'to', 'a dead channel', '.', 'All', 'this happened', 'more or less', '.', 'I', 'had', 'the story', 'bit by bit', 'from various people', 'and', 'as generally', 'happens', 'in such cases', 'each time', 'it', 'was', 'a different story', '.', 'It', 'was', 'a pleasure', 'to', 'burn'];
+    let txt = '';
     while (size > 0) {
         size--;
         txt += words[Math.floor(Math.random() * words.length)] + ' ';
@@ -50,6 +49,16 @@ function getTimeAndDate(timestamp) {
     ];
     const unformattedDate = new Date(timestamp);
     let date = `${short_month_names[unformattedDate.getMonth()]
-        } ${unformattedDate.getDate()} `;
+        } ${unformattedDate.getDate()}, ${unformattedDate.getFullYear()} `;
     return `${date} at ${unformattedDate.getHours()}:${unformattedDate.getMinutes()} `;
 };
+
+function getEmptyToy() {
+    return {
+        name: "",
+        price: null,
+        inStock: true,
+        labels: [],
+        reviews: [],
+    }
+}

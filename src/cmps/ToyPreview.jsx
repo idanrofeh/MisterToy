@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 
 export function ToyPreview({ toy }) {
   let navigate = useNavigate();
+
   const { name, price, inStock } = toy;
   return (
     <section

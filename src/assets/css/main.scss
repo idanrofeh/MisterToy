@@ -19,12 +19,13 @@ body {
 /* PAGES */
 @import "pages/toy-app.scss";
 @import "pages/about.scss";
+@import "cmps/toy-details.scss";
+@import "cmps/toy-edit.scss";
 
 /* CMPS */
 @import "cmps/toy-list.scss";
 @import "cmps/toy-preview.scss";
 @import "cmps/app-header.scss";
-@import "cmps/toy-details.scss";
 @import "cmps/toy-filter.scss";
 
 /* HELPERS */
