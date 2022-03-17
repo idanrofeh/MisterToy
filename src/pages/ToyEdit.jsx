@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router";
+import { useSearchParams } from "react-router-dom";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Select from "react-select";
 
 import { toyService } from "../services/toy-service";
 import { utilService } from "../services/util.service";
+
+import { loadToys } from "../store/actions/toy-actions";
 
 const options = [
   { value: "Box game", label: "Box game" },
@@ -16,10 +19,17 @@ const options = [
   { value: "Battery powered", label: "Battery powered" },
 ];
 
-function _ToyEdit({ toys }) {
+function _ToyEdit({ toys, loadToys }) {
   const [toy, setToy] = useState(null);
-  const { toyId } = useParams();
+  const [searchParams] = useSearchParams();
+  const toyId = searchParams.get("toyId");
   let navigate = useNavigate();
+
+  useEffect(async () => {
+    if (!toys.length) {
+      await loadToys();
+    }
+  }, []);
 
   useEffect(async () => {
     let toyToSet;
@@ -27,10 +37,15 @@ function _ToyEdit({ toys }) {
       toyToSet = toys.find((toy) => toy._id === toyId);
     } else toyToSet = utilService.getEmptyToy();
     setToy(toyToSet);
-  }, []);
+  }, [toys]);
 
   const onRemoveToy = async (toyId) => {
     await toyService.removeToy(toyId);
+    navigate("/");
+  };
+
+  const onSaveToy = async (toyId) => {
+    await toyService.saveToy(toyId);
     navigate("/");
   };
 
@@ -51,19 +66,56 @@ function _ToyEdit({ toys }) {
   };
 
   if (!toy) return <span>No such toy</span>;
-  const { name, price, labels, createdAt, inStock } = toy;
+  const { name, price, inStock, labels } = toy;
+  const labelsForSelect = labels.map((label) => {
+    return { value: label, label };
+  });
+
   return (
     <section className="toy-edit">
-      <h3 className="detail name">{name}</h3>
+      <div className="name detail">
+        <span>Name</span>:
+        <input
+          type="text"
+          name="name"
+          placeholder="Enter toy name"
+          value={name}
+          onChange={handleChange}
+        />
+      </div>
       <div className="detail price">
-        <span>Price</span>: {price}$
+        <span>Price</span>:
+        <input
+          type="number"
+          name="name"
+          placeholder="Enter price"
+          value={price}
+          onChange={handleChange}
+        />
+        $
       </div>
-      <div className="detail labels"></div>
-      <div className="detail created-at">
-        <span>Created at</span>: {utilService.getTimeAndDate(createdAt)}
+      <div className="detail labels">
+        <span>Labels</span>:
+        <Select
+          className="select"
+          name="labels"
+          isMulti
+          options={options}
+          onChange={handleLabelChange}
+          value={labelsForSelect}
+        />
       </div>
-      <div className={"bold in-stock detail " + (inStock ? "green" : "red")}>
-        {inStock ? "In Stock" : "Out of Stock"}
+      <div className="detail in-stock">
+        <span>Stock</span>:
+        <select name="inStock" onChange={handleChange} value={inStock}>
+          <option value="all">All</option>
+          <option value={false}>Out of stock</option>
+          <option value={true}>In stock</option>
+        </select>
+      </div>
+      <div className="submit">
+        <a href="/">Back to Toys</a>
+        <a onClick={() => onSaveToy(toy)}>Save</a>
       </div>
     </section>
   );
@@ -73,4 +125,8 @@ function mapStateToProps(state) {
   return { toys: state.toyModule.toys };
 }
 
-export const ToyEdit = connect(mapStateToProps)(_ToyEdit);
+const mapDispatchToProps = {
+  loadToys,
+};
+
+export const ToyEdit = connect(mapStateToProps, mapDispatchToProps)(_ToyEdit);

@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
+
 import { loadToys } from "../store/actions/toy-actions";
 
-import { toyService } from "../services/toy-service";
 import { utilService } from "../services/util.service";
 import { NavLink } from "react-router-dom";
 
@@ -13,7 +13,6 @@ export function _ToyDetails({ toys, loadToys }) {
 
   useEffect(async () => {
     if (!toys.length) {
-      console.log("@!@!@!@!@!");
       await loadToys();
     }
   }, []);
@@ -38,7 +37,7 @@ export function _ToyDetails({ toys, loadToys }) {
       <div className={"bold in-stock detail " + (inStock ? "green" : "red")}>
         {inStock ? "In Stock" : "Out of Stock"}
       </div>
-      <NavLink to={`/edit/${toy._id}`}>Edit toy</NavLink>
+      <NavLink to={`/edit/?toyId=${toy._id}`}>Edit toy</NavLink>
     </section>
   );
 }

@@ -37,11 +37,12 @@ function _ToyFilter({ storeFilterBy, onSetFilter, onSetSort, sortBy }) {
     <section className="toy-filter">
       <h3>Filter Toys</h3>
       <div className="filter">
+        🔎
         <input
           className="search-bar"
           type="text"
           name="name"
-          placeholder="🔎Search toys.."
+          placeholder="Search toys.."
           value={filterBy.name}
           onChange={handleChange}
         />

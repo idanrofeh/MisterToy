@@ -5,7 +5,7 @@ import { ToyEdit } from "./pages/ToyEdit.jsx"
 
 export default [
     {
-        path: "/?",
+        path: "/",
         component: ToyApp,
     },
     {
@@ -17,7 +17,7 @@ export default [
         component: ToyDetails,
     },
     {
-        path: "/edit/:toyId",
+        path: "/edit",
         component: ToyEdit,
     },
 ]
