@@ -19,6 +19,7 @@ function saveToy(toy) {
 
 function _addToy(toy) {
     toy._id = utilService.makeId();
+    toy.createdAt = Date.now();
     storageService.addToy(toy);
 }
 
@@ -27,5 +28,6 @@ function _updateToy(toy) {
 }
 
 function removeToy(id) {
-    storageService.removeToy(id);
+    if (id) storageService.removeToy(id);
+    else return Promise.resolve();
 }

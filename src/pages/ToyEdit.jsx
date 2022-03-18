@@ -44,8 +44,8 @@ function _ToyEdit({ toys, loadToys }) {
     navigate("/");
   };
 
-  const onSaveToy = async (toyId) => {
-    await toyService.saveToy(toyId);
+  const onSaveToy = async (toy) => {
+    await toyService.saveToy(toy);
     navigate("/");
   };
 
@@ -87,7 +87,7 @@ function _ToyEdit({ toys, loadToys }) {
         <span>Price</span>:
         <input
           type="number"
-          name="name"
+          name="price"
           placeholder="Enter price"
           value={price}
           onChange={handleChange}
@@ -117,9 +117,14 @@ function _ToyEdit({ toys, loadToys }) {
         <a className="btn" href="/">
           Back to Toys
         </a>
-        <a className="btn" onClick={() => onSaveToy(toy)}>
-          Save
-        </a>
+        <div>
+          <a className="btn" onClick={() => onSaveToy(toy)}>
+            Save
+          </a>
+          <a className="btn" onClick={() => onRemoveToy(toy._id)}>
+            Remove toy
+          </a>
+        </div>
       </div>
     </section>
   );

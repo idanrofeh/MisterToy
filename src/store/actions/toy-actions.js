@@ -15,7 +15,6 @@ export function onSetSort(sortBy) {
 }
 
 export function onSetFilter(filterBy) {
-    console.log(filterBy);
     return (dispatch) => {
         dispatch({ type: 'SET_FILTER', filterBy })
     };
