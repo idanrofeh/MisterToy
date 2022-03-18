@@ -37,7 +37,14 @@ export function _ToyDetails({ toys, loadToys }) {
       <div className={"bold in-stock detail " + (inStock ? "green" : "red")}>
         {inStock ? "In Stock" : "Out of Stock"}
       </div>
-      <NavLink to={`/edit/?toyId=${toy._id}`}>Edit toy</NavLink>
+      <div className="nav">
+        <NavLink className="btn" to="/">
+          Back to toys
+        </NavLink>
+        <NavLink className="btn" to={`/edit/?toyId=${toy._id}`}>
+          Edit toy
+        </NavLink>
+      </div>
     </section>
   );
 }

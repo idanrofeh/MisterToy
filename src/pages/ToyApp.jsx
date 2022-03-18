@@ -3,12 +3,11 @@ import { useEffect } from "react";
 
 import { loadToys } from "../store/actions/toy-actions";
 
-import { storageService } from "../services/async-storage-service";
-
 import { ToyList } from "../cmps/ToyList.jsx";
 import { ToyFilter } from "../cmps/ToyFilter.jsx";
+import { NavLink } from "react-router-dom";
 
-function _ToyApp({ loadToys, toys, filterBy, sortBy }) {
+function _ToyApp({ loadToys, toys, filterBy }) {
   useEffect(async () => {
     await loadToys();
   }, [filterBy]);
@@ -18,6 +17,9 @@ function _ToyApp({ loadToys, toys, filterBy, sortBy }) {
     <section className="toy-app">
       <ToyFilter />
       <ToyList toys={toys} />
+      <NavLink className="btn" to="/edit">
+        Add Toy
+      </NavLink>
     </section>
   );
 }

@@ -59,7 +59,7 @@ function _ToyFilter({ storeFilterBy, onSetFilter, onSetSort, sortBy }) {
           </select>
         </label>
         <br></br>
-        <label>
+        <label className="labels">
           <span>Labels:</span>
           <Select
             className="select"
@@ -69,10 +69,7 @@ function _ToyFilter({ storeFilterBy, onSetFilter, onSetSort, sortBy }) {
             onChange={handleLabelChange}
           />
         </label>
-        <a
-          className="filter-btn hover"
-          onClick={() => onSetFilter({ ...filterBy })}
-        >
+        <a className="btn hover" onClick={() => onSetFilter({ ...filterBy })}>
           Filter!
         </a>
       </div>
@@ -84,7 +81,7 @@ function _ToyFilter({ storeFilterBy, onSetFilter, onSetSort, sortBy }) {
             onChange={({ target }) => onSetSort(target.value)}
             value={sortBy}
           >
-            <option value="createdAt">CreatedAt</option>
+            <option value="createdAt">Newest</option>
             <option value="name">Name</option>
             <option value="price">Price</option>
           </select>

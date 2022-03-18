@@ -8,4 +8,12 @@
       text-decoration: underline;
     }
   }
+  .nav {
+    display: flex;
+    position: absolute;
+    bottom: 2rem;
+    width: 90vw;
+    margin: 1rem;
+    justify-content: space-between;
+  }
 }

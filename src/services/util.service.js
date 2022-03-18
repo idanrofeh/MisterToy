@@ -56,7 +56,7 @@ function getTimeAndDate(timestamp) {
 function getEmptyToy() {
     return {
         name: "",
-        price: "",
+        price: 100,
         inStock: true,
         labels: [],
         reviews: [],

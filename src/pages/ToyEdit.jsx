@@ -114,8 +114,12 @@ function _ToyEdit({ toys, loadToys }) {
         </select>
       </div>
       <div className="submit">
-        <a href="/">Back to Toys</a>
-        <a onClick={() => onSaveToy(toy)}>Save</a>
+        <a className="btn" href="/">
+          Back to Toys
+        </a>
+        <a className="btn" onClick={() => onSaveToy(toy)}>
+          Save
+        </a>
       </div>
     </section>
   );

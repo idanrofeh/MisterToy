@@ -12,23 +12,16 @@
     margin-bottom: 5px;
     margin-top: 5px;
   }
-  label {
-    margin: 10px;
+  .search-bar {
+    margin-right: 20px;
+    margin-bottom: 15px;
   }
   .select {
     max-width: 400px;
     margin: auto;
     margin-bottom: 10px;
   }
-  .filter-btn {
-    background-color: blanchedalmond;
-    border-width: 2px;
-    border-style: solid;
-    border-color: black;
-    font-size: 12px;
-    border-radius: 4px;
-  }
   .sorter {
-    margin: 0.5rem;
+    margin-top: 15px;
   }
 }
