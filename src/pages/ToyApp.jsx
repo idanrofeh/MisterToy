@@ -1,22 +1,22 @@
 import { connect } from "react-redux";
 import { useEffect } from "react";
+import { NavLink } from "react-router-dom";
 
 import { loadToys } from "../store/actions/toy-actions";
 
 import { ToyList } from "../cmps/ToyList.jsx";
 import { ToyFilter } from "../cmps/ToyFilter.jsx";
-import { NavLink } from "react-router-dom";
 
 function _ToyApp({ loadToys, toys, filterBy }) {
-  useEffect(async () => {
-    await loadToys();
+  useEffect(() => {
+    loadToys();
   }, [filterBy]);
 
-  if (!toys) return <span>No toys to show</span>;
   return (
     <section className="toy-app">
       <ToyFilter />
-      <ToyList toys={toys} />
+      {Boolean(toys?.length) && <ToyList toys={toys} />}
+      {Boolean(!toys || !toys.length) && <span>No toys to show</span>}
       <NavLink className="btn" to="/edit">
         Add Toy
       </NavLink>

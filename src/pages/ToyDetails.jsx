@@ -11,10 +11,8 @@ export function _ToyDetails({ toys, loadToys }) {
   const [toy, setToy] = useState(null);
   const { toyId } = useParams();
 
-  useEffect(async () => {
-    if (!toys.length) {
-      await loadToys();
-    }
+  useEffect(() => {
+    if (!toys.length) loadToys();
   }, []);
 
   useEffect(() => {

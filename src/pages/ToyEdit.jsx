@@ -25,13 +25,11 @@ function _ToyEdit({ toys, loadToys }) {
   const toyId = searchParams.get("toyId");
   let navigate = useNavigate();
 
-  useEffect(async () => {
-    if (!toys.length) {
-      await loadToys();
-    }
+  useEffect(() => {
+    if (!toys.length) loadToys();
   }, []);
 
-  useEffect(async () => {
+  useEffect(() => {
     let toyToSet;
     if (toyId) {
       toyToSet = toys.find((toy) => toy._id === toyId);
