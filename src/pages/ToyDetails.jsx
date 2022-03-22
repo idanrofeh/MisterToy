@@ -2,18 +2,12 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
 
-import { loadToys } from "../store/actions/toy-actions";
-
 import { utilService } from "../services/util.service";
 import { NavLink } from "react-router-dom";
 
-export function _ToyDetails({ toys, loadToys }) {
+export function _ToyDetails({ toys }) {
   const [toy, setToy] = useState(null);
   const { toyId } = useParams();
-
-  useEffect(() => {
-    if (!toys.length) loadToys();
-  }, []);
 
   useEffect(() => {
     const toyToSet = toys.find((toy) => toy._id === toyId);
@@ -53,11 +47,4 @@ function mapStateToProps(state) {
   };
 }
 
-const mapDispatchToProps = {
-  loadToys,
-};
-
-export const ToyDetails = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(_ToyDetails);
+export const ToyDetails = connect(mapStateToProps)(_ToyDetails);
