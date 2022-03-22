@@ -71,59 +71,63 @@ function _ToyEdit({ toys, loadToys }) {
 
   return (
     <section className="toy-edit">
-      <div className="name detail">
-        <span>Name</span>:
-        <input
-          type="text"
-          name="name"
-          placeholder="Enter toy name"
-          value={name}
-          onChange={handleChange}
-        />
-      </div>
-      <div className="detail price">
-        <span>Price</span>:
-        <input
-          type="number"
-          name="price"
-          placeholder="Enter price"
-          value={price}
-          onChange={handleChange}
-        />
-        $
-      </div>
-      <div className="detail labels">
-        <span>Labels</span>:
-        <Select
-          className="select"
-          name="labels"
-          isMulti
-          options={options}
-          onChange={handleLabelChange}
-          value={labelsForSelect}
-        />
-      </div>
-      <div className="detail in-stock">
-        <span>Stock</span>:
-        <select name="inStock" onChange={handleChange} value={inStock}>
-          <option value="all">All</option>
-          <option value={false}>Out of stock</option>
-          <option value={true}>In stock</option>
-        </select>
-      </div>
-      <div className="submit">
-        <a className="btn" href="/">
-          Back to Toys
-        </a>
-        <div>
-          <a className="btn" onClick={() => onSaveToy(toy)}>
-            Save
-          </a>
-          <a className="btn" onClick={() => onRemoveToy(toy._id)}>
-            Remove toy
-          </a>
+      <form className="edit-form" onSubmit={() => onSaveToy(toy)}>
+        <div className="name detail">
+          <span>Name</span>:
+          <input
+            required
+            type="text"
+            name="name"
+            placeholder="Enter toy name"
+            value={name}
+            onChange={handleChange}
+          />
         </div>
-      </div>
+        <div className="detail price">
+          <span>Price</span>:
+          <input
+            min={0}
+            required
+            type="number"
+            name="price"
+            placeholder="Enter price"
+            value={price}
+            onChange={handleChange}
+          />
+          $
+        </div>
+        <div className="detail labels">
+          <span>Labels</span>:
+          <Select
+            className="select"
+            name="labels"
+            isMulti
+            options={options}
+            onChange={handleLabelChange}
+            value={labelsForSelect}
+          />
+        </div>
+        <div className="detail in-stock">
+          <span>Stock</span>:
+          <select name="inStock" onChange={handleChange} value={inStock}>
+            <option value="all">All</option>
+            <option value={false}>Out of stock</option>
+            <option value={true}>In stock</option>
+          </select>
+        </div>
+        <div className="submit">
+          <a className="btn" type="submit">
+            Back to Toys
+          </a>
+          <div>
+            <input className="btn" value="Save" type="submit" />
+
+            <a className="btn" onClick={() => onRemoveToy(toy._id)}>
+              Remove toy
+            </a>
+          </div>
+        </div>
+      </form>
     </section>
   );
 }

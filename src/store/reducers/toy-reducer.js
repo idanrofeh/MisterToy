@@ -1,3 +1,5 @@
+import { loadToys } from "../actions/toy-actions";
+
 const initialState = {
     toys: [],
     filterBy: {
@@ -12,6 +14,9 @@ export function toyReducer(state = initialState, action) {
     let newState;
 
     switch (action.type) {
+        case 'CLEAN_FILTER':
+            newState = { ...state, filterBy: initialState.filterBy }
+            break;
         case 'SET_TOYS':
             newState = { ...state, toys: action.toys }
             break;
@@ -28,7 +33,7 @@ export function toyReducer(state = initialState, action) {
             newState = { ...state, toys: sortedToys, sortBy }
             break;
         case 'SET_FILTER':
-            newState = { ...state, filterBy: action.filterBy }
+            newState = { ...state, filterBy: action.filterBy, toys: action.toys }
             break;
         default:
             newState = state;

@@ -14,8 +14,15 @@ export function onSetSort(sortBy) {
     };
 }
 
-export function onSetFilter(filterBy) {
+export function cleanFilter() {
     return (dispatch) => {
-        dispatch({ type: 'SET_FILTER', filterBy })
+        dispatch({ type: 'CLEAN_FILTER' })
+    }
+}
+
+export function onSetFilter(filterBy) {
+    return async (dispatch) => {
+        const toys = await toyService.query(filterBy);
+        dispatch({ type: 'SET_FILTER', filterBy, toys })
     };
 }
