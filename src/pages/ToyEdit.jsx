@@ -7,6 +7,8 @@ import Select from "react-select";
 import { toyService } from "../services/toy-service";
 import { utilService } from "../services/util.service";
 
+import { loadToys } from "../store/actions/toy-actions";
+
 const options = [
   { value: "Box game", label: "Box game" },
   { value: "Art", label: "Art" },
@@ -17,12 +19,15 @@ const options = [
   { value: "Battery powered", label: "Battery powered" },
 ];
 
-function _ToyEdit({ toys }) {
-  let navigate = useNavigate();
+function _ToyEdit({ toys, loadToys }) {
   const [toy, setToy] = useState(null);
   const [searchParams] = useSearchParams();
-
   const toyId = searchParams.get("toyId");
+  let navigate = useNavigate();
+
+  useEffect(() => {
+    if (!toys.length) loadToys();
+  }, []);
 
   useEffect(() => {
     let toyToSet;
@@ -30,15 +35,15 @@ function _ToyEdit({ toys }) {
       toyToSet = toys.find((toy) => toy._id === toyId);
     } else toyToSet = utilService.getEmptyToy();
     setToy(toyToSet);
-  }, []);
+  }, [toys]);
 
   const onRemoveToy = async (toyId) => {
     await toyService.removeToy(toyId);
     navigate("/");
   };
 
-  const onSaveToy = (toy) => {
-    toyService.saveToy(toy);
+  const onSaveToy = async (toy) => {
+    await toyService.saveToy(toy);
     navigate("/");
   };
 
@@ -111,13 +116,13 @@ function _ToyEdit({ toys }) {
           </select>
         </div>
         <div className="submit">
-          <a className="btn hover" href="/">
+          <a className="btn" type="submit">
             Back to Toys
           </a>
           <div>
-            <input className="btn hover" value="Save" type="submit" />
+            <input className="btn" value="Save" type="submit" />
 
-            <a className="btn hover" onClick={() => onRemoveToy(toy._id)}>
+            <a className="btn" onClick={() => onRemoveToy(toy._id)}>
               Remove toy
             </a>
           </div>
@@ -131,4 +136,8 @@ function mapStateToProps(state) {
   return { toys: state.toyModule.toys };
 }
 
-export const ToyEdit = connect(mapStateToProps)(_ToyEdit);
+const mapDispatchToProps = {
+  loadToys,
+};
+
+export const ToyEdit = connect(mapStateToProps, mapDispatchToProps)(_ToyEdit);

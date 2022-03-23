@@ -11,23 +11,20 @@ export const toyService = {
 const BASE_API = "http://localhost:3030/api/toy";
 
 async function query(filterBy) {
-    const queryStr = _getQueryStr(filterBy)
+    let queryStr = ""
+    if (filterBy) {
+        const { inStock, name, labels } = filterBy;
+        const inStockStr = `inStock=${inStock}`;
+        if (labels?.length) {
+            const labelsStr = "labels=" + labels.join("_");
+            queryStr += "?" + labelsStr;
+        } if (name) {
+            const nameStr = `name=${name}`;
+            queryStr += ((queryStr === "") ? `?${nameStr}` : `&${nameStr}`);
+        } queryStr += ((queryStr === "") ? `?${inStockStr}` : `&${inStockStr}`);
+    }
     const res = await axios.get(BASE_API + queryStr);
     return res.data;
-}
-
-function _getQueryStr({ inStock, name, labels }) {
-    let queryStr = ""
-    if (labels?.length) {
-        const labelsStr = "labels=" + labels.join("_");
-        queryStr += "?" + labelsStr;
-    } if (name) {
-        const nameStr = `name=${name}`;
-        queryStr += ((queryStr === "") ? `?${nameStr}` : `&${nameStr}`);
-    }
-    const inStockStr = `inStock=${inStock}`;
-    queryStr += ((queryStr === "") ? `?${inStockStr}` : `&${inStockStr}`);
-    return queryStr;
 }
 
 async function removeToy(toyId) {
